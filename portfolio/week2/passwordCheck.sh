@@ -1,26 +1,29 @@
 #/bin/bash
 #ask users to enter password
-read -sp "Please enter password: " password
+Red="\033[31m"
+Reset="\033[0m"
+Green="\033[32m"
+read -sp "$(echo -e $Red"Please enter password: "$Reset)" password
 echo
 # hash the enterd password and pass it to text file 
 
 
-echo $password|sha256sum >pass.txt
+echo $password|sha256sum >~/scripts/portfolio/week2/pass.txt
 
 #call stored password
-secret="$(<secret.txt)"
+secret="$(<~/scripts/portfolio/week2/secret.txt)"
 #call enterd password 
-pass="$(<pass.txt)"
+pass="$(<~/scripts/portfolio/week2/pass.txt)"
 #check if enterd password is correct 
 
 
 if [ "$secret" == "$pass" ];then
 #grant access 
-    echo "Access Granted"
+    echo -e "${Green}Access Granted${Reset}"
     exit 0
 else
 #otherwise, print error
-    echo "Access Denied"
+    echo -e "${Red}Access Denied${Reset}"
     exit 1
 fi
 
